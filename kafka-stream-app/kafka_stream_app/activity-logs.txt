@@ -1,0 +1,49 @@
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mcom.mimacom:kafka_stream_app[0;1m >--------------------[m
+[[1;34mINFO[m] [1mBuilding kafka_stream_app 0.0.1-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36mkafka_stream_app[0;1m ---[m
+[[1;34mINFO[m] Deleting /home/nblp/my-repos/kafka/experiements/kafka-monitor-demo/kafka-stream-app/kafka_stream_app/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36mkafka_stream_app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:compile[m [1m(default-compile)[m @ [36mkafka_stream_app[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged source code[m.
+[[1;34mINFO[m] Compiling 7 source files with javac [debug parameters release 21] to target/classes
+[[1;34mINFO[m] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36mkafka_stream_app[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /home/nblp/my-repos/kafka/experiements/kafka-monitor-demo/kafka-stream-app/kafka_stream_app/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:testCompile[m [1m(default-testCompile)[m @ [36mkafka_stream_app[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged dependency[m.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.2.5:test[m [1m(default-test)[m @ [36mkafka_stream_app[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.4.1:jar[m [1m(default-jar)[m @ [36mkafka_stream_app[0;1m ---[m
+[[1;34mINFO[m] Building jar: /home/nblp/my-repos/kafka/experiements/kafka-monitor-demo/kafka-stream-app/kafka_stream_app/target/kafka_stream_app-0.0.1-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.3.0:repackage[m [1m(repackage)[m @ [36mkafka_stream_app[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /home/nblp/my-repos/kafka/experiements/kafka-monitor-demo/kafka-stream-app/kafka_stream_app/target/kafka_stream_app-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /home/nblp/my-repos/kafka/experiements/kafka-monitor-demo/kafka-stream-app/kafka_stream_app/target/kafka_stream_app-0.0.1-SNAPSHOT.jar.original
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:3.1.2:install[m [1m(default-install)[m @ [36mkafka_stream_app[0;1m ---[m
+[[1;34mINFO[m] Installing /home/nblp/my-repos/kafka/experiements/kafka-monitor-demo/kafka-stream-app/kafka_stream_app/pom.xml to /home/nblp/.m2/repository/com/mimacom/kafka_stream_app/0.0.1-SNAPSHOT/kafka_stream_app-0.0.1-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /home/nblp/my-repos/kafka/experiements/kafka-monitor-demo/kafka-stream-app/kafka_stream_app/target/kafka_stream_app-0.0.1-SNAPSHOT.jar to /home/nblp/.m2/repository/com/mimacom/kafka_stream_app/0.0.1-SNAPSHOT/kafka_stream_app-0.0.1-SNAPSHOT.jar
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  9.192 s
+[[1;34mINFO[m] Finished at: 2024-06-26T08:01:58+02:00
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m

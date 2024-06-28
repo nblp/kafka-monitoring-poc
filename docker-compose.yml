@@ -1,0 +1,165 @@
+---
+services:
+
+##### BROKERS #################################################################
+
+  kafka-101:
+    image: confluentinc/cp-kafka:7.6.1-1-ubi8
+    restart: always
+    container_name: kafka-101
+    ports:
+      - 9092:9092
+      - 10092:10092
+      - 7071:7071
+    environment:
+      CLUSTER_ID: "bXktY2x1c3Rlci0xMjM0Cg=="
+      KAFKA_NODE_ID: 101
+      KAFKA_PROCESS_ROLES: broker
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 201@kafka-201:9094
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-101:9092
+      KAFKA_LISTENERS: PLAINTEXT://kafka-101:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 2
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_LOG_RETENTION_HOURS: 1
+      KAFKA_LOG_SEGMENT_BYTES: 536870912
+      KAFKA_LOG_RETENTION_BYTES: 536870912
+      JMX_PORT: 10092
+      JMX_HOSTNAME: localhost
+      KAFKA_JMX_OPTS: -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=10092
+      KAFKA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/kafka-config.yml
+      CONUEFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka-101:9092,kafka-102:9093
+      CONFLNT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+    volumes:
+      - ./monitoring_configs/jmx-exporter:/opt/jmx_prometheus
+
+  kafka-102:
+    image: confluentinc/cp-kafka:7.6.1-1-ubi8
+    restart: always
+    container_name: kafka-102
+    ports:
+      - 9093:9093
+      - 10093:10093
+    environment:
+      CLUSTER_ID: "bXktY2x1c3Rlci0xMjM0Cg=="
+      KAFKA_NODE_ID: 102
+      KAFKA_PROCESS_ROLES: broker
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 201@kafka-201:9094
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-102:9093
+      KAFKA_LISTENERS: PLAINTEXT://kafka-102:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 2
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_LOG_RETENTION_HOURS: 1
+      KAFKA_LOG_SEGMENT_BYTES: 536870912
+      KAFKA_LOG_RETENTION_BYTES: 536870912
+      JMX_PORT: 10093
+      JMX_HOSTNAME: localhost
+      KAFKA_JMX_OPTS: -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false  -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=10093
+      KAFKA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/kafka-config.yml
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka-101:9092,kafka-102:9093
+      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+    volumes:
+      - ./monitoring_configs/jmx-exporter:/opt/jmx_prometheus
+
+##### CONTROLLERS #############################################################
+
+  kafka-201:
+    image: confluentinc/cp-kafka:7.6.1-1-ubi8
+    restart: always
+    container_name: kafka-201
+    ports:
+      - 9094:9094
+      - 10094:10094
+    environment:
+      CLUSTER_ID: "bXktY2x1c3Rlci0xMjM0Cg=="
+      KAFKA_NODE_ID: 201
+      KAFKA_PROCESS_ROLES: controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 201@kafka-201:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT, CONTROLLER:PLAINTEXT
+      KAFKA_LISTENERS: CONTROLLER://kafka-201:9094
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 2
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_LOG_RETENTION_HOURS: 1
+      KAFKA_LOG_SEGMENT_BYTES: 536870912
+      KAFKA_LOG_RETENTION_BYTES: 536870912
+      JMX_PORT: 10094
+      JMX_HOSTNAME: localhost
+      KAFKA_JMX_OPTS: -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false  -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=10094
+      KAFKA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/kafka-config.yml
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka-101:9092,kafka-102:9093
+      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+    volumes:
+      - ./monitoring_configs/jmx-exporter:/opt/jmx_prometheus
+
+##### ADDONS ##################################################################
+  
+  create-topics:
+    image: cnfltraining/training-tools:7.5
+    container_name: create-topics
+    command: >
+      bash -c 'echo Waiting for Kafka to be ready... ;
+      echo Creating topics... ;
+      kafka-topics --bootstrap-server kafka-101:9092,kafka-102:9093 --create --topic sentences --partitions 2 --replication-factor 2 ;
+      kafka-topics --bootstrap-server kafka-101:9092,kafka-102:9093 --create --topic words_counts --partitions 2 --replication-factor 2 ;
+      true'
+  
+  app:
+    image: app:latest
+    container_name: app
+    ports:
+    - 8080:8080
+
+  tools:
+    image: cnfltraining/training-tools:7.5
+    container_name: tools
+    hostname: tools
+    command: /bin/bash
+    tty: true
+
+##### MONITORING ##############################################################
+
+  node-exporter:
+    image: prom/node-exporter:v0.18.1
+    container_name: node-exporter
+    ports:
+        - 9100:9100
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.ignored-mount-points"
+      - "^(aufs|proc|nsfs|shm|cgroup|tmpfs|binfmt_misc|debugfs|devpts|fusectl|hugetlbfs|fuse.lxcfs|mqueue|pstore|securityfs|sysfs|autofs|devtmpfs|configfs)"
+
+  prometheus:
+      image: bitnami/prometheus:2.52.1
+      container_name: prometheus
+      ports:
+        - 9090:9090
+      volumes:
+        - ./monitoring_configs/prometheus/:/etc/prometheus/
+
+  grafana:
+    image: grafana/grafana:10.4.4
+    container_name: grafana
+    environment:
+      - "GF_INSTALL_PLUGINS=grafana-piechart-panel"
+      - "GF_SECURITY_ADMIN_USER=admin"
+      - "GF_SECURITY_ADMIN_PASSWORD=password"
+      - "GF_USERS_ALLOW_SIGN_UP=false"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./monitoring_configs/grafana/provisioning/:/etc/grafana/provisioning/

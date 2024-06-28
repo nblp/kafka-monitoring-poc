@@ -1,0 +1,24 @@
+spring:
+    application:
+        name: "kafkapp"
+    kafka:
+        bootstrap-servers: "kafka-101:9092,kakfa-102:9093"
+        consumer:
+            group-id: "simple-consummer"
+            auto-offset-reset: "earliest"
+            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+        producer:
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+server:
+    port: 8080
+
+metrics:
+    recording:
+        level: "info"
+
+management:
+    endpoints:
+        web.exposure.include: "*"

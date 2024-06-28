@@ -1,0 +1,90 @@
+global:
+  # How frequently to scrape targets by default.
+  # Default 15s
+  scrape_interval: 5s
+  # How frequently to evaluate rules.
+  # Default 15s
+  evaluation_interval: 15s
+  # How long until a scrape request times out.
+  # Default to 10s.
+  scrape_timeout: 5s
+
+# rule_files:
+#   - "alert.rules"
+
+# alerting:
+#   alertmanagers:
+#     - scheme: http
+#       static_configs:
+#         - targets:
+#             - "alertmanager:9093"
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "node-exporter"
+    static_configs:
+      - targets: ["node-exporter:9100"]
+        labels:
+          env: "local"
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: hostname
+      regex: '([^:]+)(:[0-9]+)?'
+      replacement: '${1}'
+
+  - job_name: "kafka-broker"
+    static_configs:
+      - targets:
+        - "kafka-101:7071"
+        - "kafka-102:7071"
+        labels:
+          env: "local"
+          role: "broker"
+          cluster_id: "kafka-core"
+          cluster_type: "kafka"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: hostname
+        regex: '([^:]+)(:[0-9]+)?'
+        replacement: '${1}'
+
+  - job_name: "kafka-controller"
+    static_configs:
+      - targets:
+        - "kafka-201:7071"
+        labels:
+          env: "local"
+          role: "controller"
+          cluster_id: "kafka-core"
+          cluster_type: "kafka"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: hostname
+        regex: '([^:]+)(:[0-9]+)?'
+        replacement: '${1}'
+    
+  - job_name: app
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets:
+        - "app:8080"
+        labels:
+          env: "local"
+          role: "app"
+          cluster_id: "kafka-core"
+          cluster_type: "kafka"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: hostname
+        regex: '([^:]+)(:[0-9]+)?'
+        replacement: '${1}'
+
+  # - job_name: "kafka-lag-exporter"
+  #   static_configs:
+  #     - targets:
+  #         - "kafka-lag-exporter:9999"
+  #       labels:
+  #         env: "dev"
